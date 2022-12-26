@@ -1,0 +1,31 @@
+﻿@page "/NewEvent"
+@using BackEndAPI
+<PageTitle>New Event</PageTitle>
+<h1>New event</h1>
+
+<p>
+    <label>Title</label>
+<input type="title" @bind="@newEvent.Title" />
+</p>
+<p>
+    <label>Desc of location</label>
+<input type="location desc" @bind="@newEvent.LocationDesc" />
+    </p>
+
+<p>
+    <label>Start Date time</label>
+    <input type="datetime" @bind="@newEvent.StartDateTime" />
+</p>
+<p>
+    <label>End Date time</label>
+<input type="datetime" @bind="@newEvent.EndDateTime" />
+</p>
+<p>
+    <label>Location - Geocoded</label>
+<input type="location" @bind="@newEvent.Location" />
+</p>
+<div>
+    <br />
+    <button class="btn btn-success" @onclick="() => NewEventCreation()">New Event</button>
+    <p>@errorMessage</p>
+</div>

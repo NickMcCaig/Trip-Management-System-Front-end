@@ -1,0 +1,53 @@
+﻿@page "/Event/{Id:guid}"
+
+@using BackEndAPI
+<PageTitle>Index</PageTitle>
+@if (MyEvent is not null)
+    {
+    <p>@Id</p>
+    <h1>@MyEvent.Title</h1>
+    <p>@MyEvent.LocationDesc</p>
+    <p>@MyEvent.StartDateTime</p>
+    <p>@MyEvent.EndDateTime</p>
+    <p>Lat: @MyEvent.Lat</p>
+    <p>Lng: @MyEvent.Long</p>
+
+<div>
+    <h2>Participents:</h2>
+    @if (paricipents is not null)
+        {
+    <a>@string.Join(",", paricipents)</a>
+        }
+</div>
+<div>
+    @if (weatherForEvent is not null)
+    {
+        <h1>Weather</h1>
+        <p>Max: @weatherForEvent.MaxTemp</p>
+        <p>Min: @weatherForEvent.MinTemp</p>
+        <p>@weatherForEvent.Desc</p>
+        }
+    else
+    {
+            <p>We dont currently know the weather for your event!</p>
+    }
+
+</div>
+<div>
+    <button class="btn btn-success" @onclick="() => RegisterInterest()">Register Interest</button>
+    <button class="btn btn-success" @onclick="() => RevokeInterest()">Revoke Interest</button>
+    <button class="btn btn-success" @onclick="() => NavigateToEditEvent()">Edit Event</button>
+    <button class="btn btn-success" @onclick="() => DeleteEvent()">Delete Event</button>
+
+</div>
+<div>
+    <div>
+        <p>@errorMessage</p>
+    </div>
+</div>
+
+    }
+    else
+    {
+<p>loading...</p>
+    }

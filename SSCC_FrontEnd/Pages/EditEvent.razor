@@ -1,0 +1,59 @@
+﻿@page "/Event/{Id:guid}/Edit"
+
+@using BackEndAPI
+<PageTitle>Index</PageTitle>
+@if (MyEvent is not null)
+{
+
+    <h1>Title</h1>
+    <input type="title" @bind="@MyEvent.Title" />
+
+    <p>Location description</p>
+    <input type="location desc" @bind="@MyEvent.LocationDesc" />
+
+    <p>Start time:</p>
+    <input type="Starttime" @bind="@MyEvent.StartDateTime" />
+
+    <p>End time:</p>
+    <input type="end time" @bind="@MyEvent.EndDateTime" />
+
+    <p>Lat: @MyEvent.Lat</p>
+    <p>Lng: @MyEvent.Long</p>
+
+    <div>
+        <h2>Participents:</h2>
+        @foreach (var par in paricipents ?? Enumerable.Empty<string>())
+        {
+            <a>@par ,</a>
+        }
+    </div>
+    <div>
+        @if (weatherForEvent is not null)
+        {
+            <h1>Weather</h1>
+            <p>Max: @weatherForEvent.MaxTemp</p>
+            <p>Min: @weatherForEvent.MinTemp</p>
+            <p>@weatherForEvent.Desc</p>
+        }
+        else
+        {
+            <p>We dont currently know the weather for your event!</p>
+        }
+
+    </div>
+    <div>
+        <button class="btn btn-success" @onclick="() => DeleteEvent()" >Delete</button>
+        <button class="btn btn-success" @onclick="() => UpdateEvent()">Update</button>
+
+    </div>
+    <div>
+        <div>
+            <p>@errorMessage</p>
+        </div>
+    </div>
+
+}
+else
+{
+    <p>Loading!</p>
+}

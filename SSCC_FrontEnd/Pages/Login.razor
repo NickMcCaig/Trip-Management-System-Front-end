@@ -1,0 +1,12 @@
+﻿@page "/login"
+
+
+<PageTitle>Login/Register</PageTitle>
+<input placeholder="Username" @bind="username" />
+<input placeholder="Password" @bind="password" />
+
+<button class="btn btn-primary" @onclick="LoginAsync">Login</button>
+<a>Testing 123</a>
+<input placeholder="Email@email.com" @bind="email" />
+<button class="btn btn-success" @onclick="RegisterAsync">Register</button>
+<a>@errorMessage</a>
