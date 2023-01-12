@@ -19,6 +19,7 @@
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Forms" Version="6.0.12" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,6 +27,8 @@
     <None Remove="Microsoft.Extensions.ApiDescription.Client" />
     <None Remove="Newtonsoft.Json" />
     <None Remove="Microsoft.Extensions.Http" />
+    <None Remove="Blazored.FluentValidation" />
+    <None Remove="Microsoft.AspNetCore.Components.Forms" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="OpenAPIs\swagger.json" />

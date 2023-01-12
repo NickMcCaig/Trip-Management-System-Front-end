@@ -4,29 +4,34 @@
 <PageTitle>Index</PageTitle>
 @if (MyEvent is not null)
 {
+    <EditForm Model="@MyEvent" OnValidSubmit="@UpdateEvent">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
 
-    <h1>Title</h1>
-    <input type="title" @bind="@MyEvent.Title" />
+        <p>
+            <label>Title</label>
+            <input id="Title" @bind-value="MyEvent.Title" />
+        </p>
+        <p>
+            <label>Desc of location</label>
+            <input id="LocationDesc" @bind-value="MyEvent.LocationDesc" />
+        </p>
 
-    <p>Location description</p>
-    <input type="location desc" @bind="@MyEvent.LocationDesc" />
+        <p>
+            <label>Start Date time</label>
+            <input id="StartDateTime" @bind-value="MyEvent.StartDateTime" />
 
-    <p>Start time:</p>
-    <input type="Starttime" @bind="@MyEvent.StartDateTime" />
+        </p>
+        <p>
+            <label>End Date time</label>
+            <input id="EndDateTime" @bind-value="MyEvent.EndDateTime" />
+        </p>
+        <button class="btn btn-success" type="submit">Submit</button>
 
-    <p>End time:</p>
-    <input type="end time" @bind="@MyEvent.EndDateTime" />
-
+    </EditForm>
     <p>Lat: @MyEvent.Lat</p>
     <p>Lng: @MyEvent.Long</p>
 
-    <div>
-        <h2>Participents:</h2>
-        @foreach (var par in paricipents ?? Enumerable.Empty<string>())
-        {
-            <a>@par ,</a>
-        }
-    </div>
     <div>
         @if (weatherForEvent is not null)
         {
@@ -42,16 +47,18 @@
 
     </div>
     <div>
-        <button class="btn btn-success" @onclick="() => DeleteEvent()" >Delete</button>
-        <button class="btn btn-success" @onclick="() => UpdateEvent()">Update</button>
+        <button class="btn btn-success" @onclick="() => DeleteEvent()">Delete</button>
 
     </div>
-    <div>
+    @if (errorMessages is not null)
+    {
         <div>
-            <p>@errorMessage</p>
+            @foreach (var mes in errorMessages)
+            {
+                <p>@mes</p>
+            }
         </div>
-    </div>
-
+    }
 }
 else
 {

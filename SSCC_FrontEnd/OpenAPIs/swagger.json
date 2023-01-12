@@ -85,100 +85,12 @@
         }
       }
     },
-    "/api/Authenticate/{username}/Add-Role": {
-      "post": {
-        "tags": [
-          "Authenticate"
-        ],
-        "parameters": [
-          {
-            "name": "username",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "role",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/api/Authenticate/{username}/Remove-Role": {
-      "post": {
-        "tags": [
-          "Authenticate"
-        ],
-        "parameters": [
-          {
-            "name": "username",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "role",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/api/Authenticate/register-admin": {
-      "post": {
-        "tags": [
-          "Authenticate"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegisterModel"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegisterModel"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegisterModel"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
     "/api/Event": {
       "get": {
         "tags": [
           "Event"
         ],
+        "summary": "Get all events that are not passed the end date",
         "responses": {
           "200": {
             "description": "Success",
@@ -215,6 +127,7 @@
         "tags": [
           "Event"
         ],
+        "summary": "Creates a new Event",
         "requestBody": {
           "content": {
             "application/json": {
@@ -235,8 +148,8 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "Success",
+          "201": {
+            "description": "Created",
             "content": {
               "text/plain": {
                 "schema": {
@@ -254,6 +167,26 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationResult"
+                }
+              }
+            }
           }
         }
       }
@@ -263,6 +196,7 @@
         "tags": [
           "Event"
         ],
+        "summary": "Get Event by ID",
         "parameters": [
           {
             "name": "id",
@@ -301,7 +235,7 @@
         "tags": [
           "Event"
         ],
-        "summary": "Deletes a specific TodoItem.",
+        "summary": "Updates a Event",
         "parameters": [
           {
             "name": "id",
@@ -333,8 +267,28 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "Success"
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationResult"
+                }
+              }
+            }
           }
         }
       },
@@ -342,6 +296,7 @@
         "tags": [
           "Event"
         ],
+        "summary": "Delete an Event",
         "parameters": [
           {
             "name": "id",
@@ -365,6 +320,7 @@
         "tags": [
           "Event"
         ],
+        "summary": "Get the participants for an event",
         "parameters": [
           {
             "name": "id",
@@ -414,6 +370,7 @@
         "tags": [
           "Event"
         ],
+        "summary": "Expresses the signed in users interest in the event",
         "parameters": [
           {
             "name": "id",
@@ -437,6 +394,7 @@
         "tags": [
           "Event"
         ],
+        "summary": "Revokes the signed in users interest in the event",
         "parameters": [
           {
             "name": "id",
@@ -460,6 +418,7 @@
         "tags": [
           "Event"
         ],
+        "summary": "Checks the users interest in the event",
         "parameters": [
           {
             "name": "id",
@@ -491,6 +450,7 @@
         "tags": [
           "Event"
         ],
+        "summary": "Get the 7 day forecast for the location of the event",
         "parameters": [
           {
             "name": "id",
@@ -531,6 +491,7 @@
         "tags": [
           "Event"
         ],
+        "summary": "Get the weather for the specified event and date",
         "parameters": [
           {
             "name": "id",
@@ -580,6 +541,7 @@
         "tags": [
           "Search"
         ],
+        "summary": "Get the events based off a location query within 1 degree",
         "parameters": [
           {
             "name": "query",
@@ -627,6 +589,7 @@
         "tags": [
           "Search"
         ],
+        "summary": "Get the list of events that the signed in user is registrred on",
         "responses": {
           "200": {
             "description": "Success",
@@ -665,6 +628,7 @@
         "tags": [
           "Search"
         ],
+        "summary": "Get the list of events by ID",
         "parameters": [
           {
             "name": "userId",
@@ -733,6 +697,12 @@
         "additionalProperties": false
       },
       "Event": {
+        "required": [
+          "endDateTime",
+          "locationDesc",
+          "startDateTime",
+          "title"
+        ],
         "type": "object",
         "properties": {
           "id": {
@@ -740,20 +710,24 @@
             "format": "uuid"
           },
           "title": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 50,
+            "minLength": 3,
+            "type": "string"
           },
           "startDateTime": {
+            "minLength": 1,
             "type": "string",
             "format": "date-time"
           },
           "endDateTime": {
+            "minLength": 1,
             "type": "string",
             "format": "date-time"
           },
           "locationDesc": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 40,
+            "minLength": 3,
+            "type": "string"
           },
           "lat": {
             "type": "number",
@@ -774,6 +748,12 @@
         "additionalProperties": false
       },
       "EventDto": {
+        "required": [
+          "endDateTime",
+          "locationDesc",
+          "startDateTime",
+          "title"
+        ],
         "type": "object",
         "properties": {
           "id": {
@@ -781,20 +761,24 @@
             "format": "uuid"
           },
           "title": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 50,
+            "minLength": 3,
+            "type": "string"
           },
           "startDateTime": {
+            "minLength": 1,
             "type": "string",
             "format": "date-time"
           },
           "endDateTime": {
+            "minLength": 1,
             "type": "string",
             "format": "date-time"
           },
           "locationDesc": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 40,
+            "minLength": 3,
+            "type": "string"
           },
           "lat": {
             "type": "number",
@@ -884,6 +868,15 @@
         },
         "additionalProperties": false
       },
+      "Severity": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
       "Temp2m": {
         "type": "object",
         "properties": {
@@ -962,6 +955,64 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Event"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ValidationFailure": {
+        "type": "object",
+        "properties": {
+          "propertyName": {
+            "type": "string",
+            "nullable": true
+          },
+          "errorMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "attemptedValue": {
+            "nullable": true
+          },
+          "customState": {
+            "nullable": true
+          },
+          "severity": {
+            "$ref": "#/components/schemas/Severity"
+          },
+          "errorCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "formattedMessagePlaceholderValues": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ValidationResult": {
+        "type": "object",
+        "properties": {
+          "isValid": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidationFailure"
+            },
+            "nullable": true
+          },
+          "ruleSetsExecuted": {
+            "type": "array",
+            "items": {
+              "type": "string"
             },
             "nullable": true
           }

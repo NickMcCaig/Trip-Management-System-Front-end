@@ -2,30 +2,42 @@
 @using BackEndAPI
 <PageTitle>New Event</PageTitle>
 <h1>New event</h1>
+<EditForm Model="@newEvent" OnValidSubmit="@NewEventCreation">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
 
-<p>
-    <label>Title</label>
-<input type="title" @bind="@newEvent.Title" />
-</p>
-<p>
-    <label>Desc of location</label>
-<input type="location desc" @bind="@newEvent.LocationDesc" />
+    <p>
+        <label>Title</label>
+        <input id="Title" @bind-value="newEvent.Title" />
+    </p>
+    <p>
+        <label>Desc of location</label>
+        <input id="LocationDesc" @bind-value="newEvent.LocationDesc" />
     </p>
 
-<p>
-    <label>Start Date time</label>
-    <input type="datetime" @bind="@newEvent.StartDateTime" />
-</p>
-<p>
-    <label>End Date time</label>
-<input type="datetime" @bind="@newEvent.EndDateTime" />
-</p>
-<p>
-    <label>Location - Geocoded</label>
-<input type="location" @bind="@newEvent.Location" />
-</p>
-<div>
-    <br />
-    <button class="btn btn-success" @onclick="() => NewEventCreation()">New Event</button>
-    <p>@errorMessage</p>
-</div>
+    <p>
+        <label>Start Date time</label>
+        <input id="StartDateTime" @bind-value="newEvent.StartDateTime" />
+
+    </p>
+    <p>
+        <label>End Date time</label>
+        <input id="EndDateTime" @bind-value="newEvent.EndDateTime" />
+    </p>
+    <p>
+        <label>Location</label>
+        <input id="Location" @bind-value="newEvent.Location" />
+    </p>
+    <button class="btn btn-success" type="submit">Add new Event</button>
+
+</EditForm>
+
+@if (errorMessages is not null)
+{
+    <div>
+        @foreach (var mes in errorMessages)
+        {
+            <p>@mes</p>
+        }
+    </div>
+}

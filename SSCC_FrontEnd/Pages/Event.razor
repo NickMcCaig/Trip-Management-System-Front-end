@@ -13,10 +13,20 @@
     <p>Lng: @MyEvent.Long</p>
 
 <div>
-    <h2>Participents:</h2>
+    <h2>Participants:</h2>
     @if (paricipents is not null)
         {
-    <a>@string.Join(",", paricipents)</a>
+            <table>
+                @foreach (var row in paricipents.Select((value, index) => new { value, index }).GroupBy(x => x.index / 5))
+                {
+                    <tr>
+                        @foreach (var username in row)
+                        {
+                            <td>@username.value</td>
+                        }
+                    </tr>
+                }
+            </table>
         }
 </div>
 <div>

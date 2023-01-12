@@ -5,7 +5,7 @@ namespace SSCC_FrontEnd.Pages
 {
     public partial class EditEvent
     {
-        private string errorMessage { get; set; }
+        private ICollection<string>? errorMessages { get; set; }
         private EventDto? MyEvent { get; set; }
         private ICollection<string>? paricipents { get; set; }
 
@@ -35,31 +35,33 @@ namespace SSCC_FrontEnd.Pages
         {
             try
             {
-                await _client.Event4Async(Id); 
-                errorMessage = "Deleted Event";
+                await _client.Event4Async(Id);
+                errorMessages = new List<string> { "Event deleted." };
                 StateHasChanged();
             }
             catch
             {
-                errorMessage = "Delete failed! Has it already been deleted?";
+                errorMessages = new List<string> { "Event deletion failed. Does it exist?" };
                 StateHasChanged();
             }
         }
         private async void UpdateEvent()
         {
-            try
-            {
-                await _client.Event3Async(Id, MyEvent);
-                    errorMessage = "Updated Event";
-                StateHasChanged();
-            }
-            catch
-            {
-                errorMessage = "Update failed";
-                StateHasChanged();
-            }
+               try
+                {
+                    await _client.Event3Async(Id, MyEvent);
+                    errorMessages = new List<string> { "Event Updated." };
+                }
+                catch (ApiException<ValidationResult> ex)
+                {
+
+                    errorMessages = ex.Result.Errors.Select(i => i.ErrorMessage).ToList();
+                }
+
+            StateHasChanged();
+
         }
-        
+
 
     }
 }

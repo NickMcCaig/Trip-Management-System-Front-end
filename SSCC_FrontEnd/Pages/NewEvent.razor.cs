@@ -6,21 +6,24 @@ namespace SSCC_FrontEnd.Pages
 {
     public partial class NewEvent
     {
-        private string? errorMessage { get; set; }
+       
+        private ICollection<string>? errorMessages { get; set; }
         [Inject]
         public BackEndAPI.swaggerClient? _client { get; set; }
-        private NewEventDto newEvent = new NewEventDto() { StartDateTime = DateTime.Now, EndDateTime = DateTime.Now};
+        private NewEventDto newEvent = new NewEventDto() { StartDateTime = DateTime.Now, EndDateTime = DateTime.Now, Title = "", Location = "", LocationDesc= ""};
         private async void NewEventCreation()
         {
             try
             {
                  var createdEvent = await _client.EventAsync(newEvent);
-                errorMessage = $"Event Created : {createdEvent.Id}";
+                errorMessages =  new List<string> { $"Event Created : {createdEvent.Id}" };
               
             }
-            catch
+            catch (ApiException<ValidationResult> ex)
             {
-                errorMessage = "Event Creation failed";
+
+                errorMessages = ex.Result.Errors.Select(i => i.ErrorMessage).ToList();
+                StateHasChanged();
             }
             StateHasChanged();
 
